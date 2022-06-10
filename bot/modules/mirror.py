@@ -608,7 +608,20 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
         Thread(target=add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, qbitsel)).start()
 
     else:
-        Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, name)).start()
+      if len(mesg) > 1:
+            try:
+                ussr = mesg[1]
+            except:
+                ussr = ''
+            try:
+                pssw = mesg[2]
+            except:
+                pssw = ''
+            auth = f"{ussr}:{pssw}"
+            auth = "Basic " + b64encode(auth.encode()).decode('ascii')
+        else:
+            auth = ''
+        Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, name, auth)).start()
 
     if multi > 1:
         sleep(3)

@@ -37,7 +37,7 @@ class TgUploader:
         self.__user_settings()
         self.__app = app
         self.__chat_id = listener.message.chat.id
-        self.__message_id = listener.uid
+        self.__message_id = self.__listener.uid
         self.__user_id = listener.message.from_user.id
         self.__leech_log = LEECH_LOG.copy()  # copy then pop to keep the original var as it is
         self.__leech_log_alt = LEECH_LOG_ALT.copy()  # copy then pop to keep the original var as it is

@@ -22,8 +22,7 @@ from bot.helper.ext_utils.fs_utils import get_base_name, get_path_size, split as
 from bot.helper.ext_utils.shortenurl import short_url
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException, NotSupportedExtractionArchive
 from bot.helper.mirror_utils.download_utils.aria2_download import add_aria2c_download
-from bot.helper.mirror_utils.download_utils.mega_downloader import add_mega_download
-from bot.helper.mirror_utils.download_utils.mega_download import MegaDownloadeHelper
+from bot.helper.mirror_utils.download_utils.mega_downloader import *
 from bot.helper.mirror_utils.download_utils.gd_downloader import add_gd_download
 from bot.helper.mirror_utils.download_utils.qbit_downloader import add_qb_torrent
 from bot.helper.mirror_utils.download_utils.direct_link_generator import direct_link_generator
@@ -594,17 +593,10 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
         Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
 
     elif is_mega_link(link):
-        if BLOCK_MEGA_LINKS:
-            return sendMessage("Mega links are blocked!", bot, update)
-        link_type = get_mega_link_type(link)
-        if link_type == "folder" and BLOCK_MEGA_FOLDER:
-            sendMessage("Mega folder are blocked!", bot, update)
+        if MEGA_KEY is not None:
+            Thread(target=MegaDownloader(listener).add_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/')).start()
         else:
-            if MEGAREST:
-                mega_dl = MegaDownloadeHelper(listener).add_rest_download
-            else:
-                mega_dl = add_mega_download
-            Thread(target=mega_dl, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener)).start()
+            sendMessage('MEGA_API_KEY not Provided!', bot, message)
             '''
             if link_type == "folder":
                 sendMessage(f"{uname}, <b>Your Requested MEGA Folder Has Been Added To</b> /{BotCommands.StatusCommand}", bot, update)

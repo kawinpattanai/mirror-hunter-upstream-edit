@@ -619,7 +619,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                 pssw = ''
             auth = f"{ussr}:{pssw}"
             auth = "Basic " + b64encode(auth.encode()).decode('ascii')
-        else:
+      else:
             auth = ''
         Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, name, auth)).start()
 

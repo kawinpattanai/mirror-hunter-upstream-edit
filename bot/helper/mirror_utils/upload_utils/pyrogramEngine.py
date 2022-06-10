@@ -70,7 +70,7 @@ class TgUploader:
         if self.__sent_msg == '':
             self.__sent_msg = app.get_messages(self.__listener.message.chat.id, self.__listener.uid)
         else:
-            self.__sent_msg = app.get_messages(self.__sent_msg.chat.id, self.__sent_msg.message_id)
+            self.__sent_msg = app.get_messages(self.__sent_msg.chat.id, self.__listener.uid)
         if CUSTOM_FILENAME is not None:
             cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
             file_ = f"{CUSTOM_FILENAME} {file_}"

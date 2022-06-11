@@ -21,7 +21,7 @@ from base64 import standard_b64encode
 from lxml import etree
 from bot import LOGGER, UPTOBOX_TOKEN, CRYPT, APPDRIVE_EMAIL, APPDRIVE_PASS
 from bot.helper.telegram_helper.bot_commands import BotCommands
-from bot.helper.ext_utils.bot_utils import is_gdtot_link
+from bot.helper.ext_utils.bot_utils import *
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 
 fmed_list = ['fembed.net', 'fembed.com', 'femax20.com', 'fcdn.stream', 'feurl.com', 'layarkacaxxi.icu',
@@ -421,23 +421,13 @@ def gdtot(url: str) -> str:
         raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
     return f'https://drive.google.com/open?id={decoded_id}'
 
-account = {
-    'email': APPDRIVE_EMAIL,
-    'passwd': APPDRIVE_PASS
-    }
 def account_login(client, url, email, password):
-    """ AppDrive google drive link generator
-    By https://github.com/xcscxr """
-
-    if APPDRIVE_EMAIL is None:
-        raise DirectDownloadLinkException("ERROR: Appdrive  Email Password not provided")
-
     data = {
         'email': email,
         'password': password
     }
     client.post(f'https://{urlparse(url).netloc}/login', data=data)
-
+    
 def gen_payload(data, boundary=f'{"-"*6}_'):
     data_string = ''
     for item in data:
@@ -446,52 +436,106 @@ def gen_payload(data, boundary=f'{"-"*6}_'):
     data_string += f'{boundary}--\r\n'
     return data_string
 
-def parse_info(data):
-    info = re.findall(r'>(.*?)<\/li>', data)
+def parse_infou(data):
+    info = findall('>(.*?)<\/li>', data)
     info_parsed = {}
     for item in info:
-        kv = [s.strip() for s in item.split(':', maxsplit=1)]
+        kv = [s.strip() for s in item.split(':', maxsplit = 1)]
         info_parsed[kv[0].lower()] = kv[1]
     return info_parsed
 
 def appdrive(url: str) -> str:
+    if (APPDRIVE_EMAIL or APPDRIVE_PASS) is None:
+        raise DirectDownloadLinkException("APPDRIVE_EMAIL and APPDRIVE_PASS env vars not provided")
     client = requests.Session()
     client.headers.update({
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
     })
+
     account_login(client, url, account['email'], account['passwd'])
+
     res = client.get(url)
-    key = re.findall(r'"key",\s+"(.*?)"', res.text)[0]
+    key = findall('"key",\s+"(.*?)"', res.text)[0]
+
     ddl_btn = etree.HTML(res.content).xpath("//button[@id='drc']")
-    info_parsed = parse_info(res.text)
+
+    info_parsed = parse_infou(res.text)
     info_parsed['error'] = False
-    info_parsed['link_type'] = 'login'  # direct/login
+    info_parsed['link_type'] = 'login' # direct/login
+    
     headers = {
         "Content-Type": f"multipart/form-data; boundary={'-'*4}_",
     }
+    
     data = {
         'type': 1,
         'key': key,
         'action': 'original'
     }
+    
     if len(ddl_btn):
         info_parsed['link_type'] = 'direct'
         data['action'] = 'direct'
+    
     while data['type'] <= 3:
         try:
             response = client.post(url, data=gen_payload(data), headers=headers).json()
             break
         except: data['type'] += 1
+        
     if 'url' in response:
         info_parsed['gdrive_link'] = response['url']
     elif 'error' in response and response['error']:
         info_parsed['error'] = True
         info_parsed['error_message'] = response['message']
+    else:
+        info_parsed['error'] = True
+        info_parsed['error_message'] = 'Something went wrong :('
+        
+    if info_parsed['error']:
+        raise DirectDownloadLinkException(f"ERROR! {info_parsed['error_message']}")
+    
+    if urlparse(url).netloc == 'appdrive.in' and not info_parsed['error']:
+        flink = info_parsed['gdrive_link']
+        return flink
+    
     if urlparse(url).netloc == 'driveapp.in' and not info_parsed['error']:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn')]/@href")[0]
-        info_parsed['gdrive_link'] = drive_link
-    if not info_parsed['error']:
-        return info_parsed
-    else:
-        raise DirectDownloadLinkException(f"{info_parsed['error_message']}")
+        flink = drive_link
+        return flink
+
+    if urlparse(url).netloc == 'drivesharer.in' and not info_parsed['error']:
+        res = client.get(info_parsed['gdrive_link'])
+        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        flink = drive_link
+        return flink
+
+    if urlparse(url).netloc == 'drivebit.in' and not info_parsed['error']:
+        res = client.get(info_parsed['gdrive_link'])
+        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        flink = drive_link
+        return flink
+        
+    if urlparse(url).netloc == 'driveace.in' and not info_parsed['error']:
+        res = client.get(info_parsed['gdrive_link'])
+        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        flink = drive_link
+        return flink
+    
+    if urlparse(url).netloc == 'drivelinks.in' and not info_parsed['error']:
+        res = client.get(info_parsed['gdrive_link'])
+        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        flink = drive_link
+        return flink
+    
+    if urlparse(url).netloc == 'drivepro.in' and not info_parsed['error']:
+        res = client.get(info_parsed['gdrive_link'])
+        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        flink = drive_link
+        return flink
+
+    flink = info_parsed['gdrive_link']
+    info_parsed['src_url'] = url
+    
+    return flink

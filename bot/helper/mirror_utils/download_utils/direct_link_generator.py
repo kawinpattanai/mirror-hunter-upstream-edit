@@ -450,7 +450,7 @@ def parse_infou(data):
         info_parsed[kv[0].lower()] = kv[1]
     return info_parsed
 
-def appdrive(url: str) -> str:
+def unified(url: str) -> str:
     if (UNIFIED_EMAIL or UNIFIED_PASS) is None:
         raise DirectDownloadLinkException("UNIFIED_EMAIL and UNIFIED_PASS env vars not provided")
     client = cloudscraper.create_scraper(delay=10, browser='chrome')

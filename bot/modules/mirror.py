@@ -272,8 +272,8 @@ class MirrorListener:
                 message = sendMessage(msg + pmwarn + warnmsg, self.bot, self.update)
                 Thread(target=auto_delete_upload_message, args=(bot, self.message, message)).start()
 
-            if MIRROR_LOGS:
-                for i in MIRROR_LOGS:
+            if LEECH_LOG:
+                for i in LEECH_LOG:
                     '''
                     if SOURCE_LINK is True:
                         buttons.buildbutton("🔗 Source Link", link)

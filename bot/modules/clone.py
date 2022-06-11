@@ -55,9 +55,19 @@ def cloneNode(update, context, multi=0):
                 bot, update, reply_markup=InlineKeyboardMarkup(keyboard))
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
-    args = update.message.text.split(" ", maxsplit=1)
+        
+    temp = message.text.split(" |", maxsplit=1)
+    args = temp[0].split(" ")
+    
+    #args = update.message.text.split(" ", maxsplit=1)
     reply_to = update.message.reply_to_message
     link = ''
+    try:
+        new_name = temp[1]
+        new_name = new_name.strip()
+    except Exception:
+        new_name = ""
+        
     if len(args) > 1:
         link = args[1]
         if link.isdigit():
@@ -98,6 +108,8 @@ def cloneNode(update, context, multi=0):
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
+        if new_name:
+            name = new_name
         if res != "":
             return sendMessage(res, context.bot, update)
         if STOP_DUPLICATE:
@@ -121,7 +133,7 @@ def cloneNode(update, context, multi=0):
             Thread(target=_clone, args=(nextmsg, bot, multi)).start()
         if files <= 20:
             msg = sendMessage(f"Cloning: <code>{link}</code>", context.bot, update)
-            result, button = gd.clone(link)
+            result, button = gd.clone(link, name)
             deleteMessage(context.bot, msg)
         else:
             drive = GoogleDriveHelper(name)
@@ -130,7 +142,7 @@ def cloneNode(update, context, multi=0):
             with download_dict_lock:
                 download_dict[update.message.message_id] = clone_status
             sendStatusMessage(update, context.bot)
-            result, button = drive.clone(link)
+            result, button = drive.clone(link, name)
             with download_dict_lock:
                 del download_dict[update.message.message_id]
                 count = len(download_dict)

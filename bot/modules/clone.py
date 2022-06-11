@@ -87,8 +87,7 @@ def cloneNode(update, context, multi=0):
     elif is_appdrive:
         msg = sendMessage(f"Processing: <code>{link}</code>", context.bot, update)
         try:
-            apdict = appdrive(link)
-            link = apdict.get('gdrive_link')
+            link = appdrive(link)
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)

@@ -56,7 +56,7 @@ def cloneNode(update, context, multi=0):
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
     
-    uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
+    uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
     args = update.message.text.split(" ", maxsplit=1)
     mesg = self.message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)

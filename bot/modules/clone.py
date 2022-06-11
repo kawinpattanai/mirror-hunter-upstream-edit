@@ -56,8 +56,28 @@ def cloneNode(update, context, multi=0):
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
     
+    uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
     args = update.message.text.split(" ", maxsplit=1)
+    mesg = self.message.text.split('\n')
+    message_args = mesg[0].split(' ', maxsplit=1)
     reply_to = update.message.reply_to_message
+    slmsg = f"Added by: {uname} \nUser ID: <code>{self.user_id}</code>\n\n"
+    if LINK_LOGS:
+            try:
+                source_link = message_args[1]
+                for link_log in LINK_LOGS:
+                    bot.sendMessage(link_log, text=slmsg + source_link, parse_mode=ParseMode.HTML )
+            except IndexError:
+                pass
+            if reply_to is not None:
+                try:
+                    reply_text = reply_to.text
+                    if is_url(reply_text):
+                        source_link = reply_text.strip()
+                        for link_log in LINK_LOGS:
+                            bot.sendMessage(chat_id=link_log, text=slmsg + source_link, parse_mode=ParseMode.HTML )
+                except TypeError:
+                    pass
     link = ''
     
     if len(args) > 1:

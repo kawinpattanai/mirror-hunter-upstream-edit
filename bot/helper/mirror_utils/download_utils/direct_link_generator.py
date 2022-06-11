@@ -420,6 +420,11 @@ def gdtot(url: str) -> str:
     except:
         raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
     return f'https://drive.google.com/open?id={decoded_id}'
+  
+account = {
+   'email': APPDRIVE_EMAIL, 
+   'passwd': APPDRIVE_PASS
+}
 
 def account_login(client, url, email, password):
     data = {

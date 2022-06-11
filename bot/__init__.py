@@ -553,16 +553,44 @@ try:
         raise KeyError
 except:
     CRYPT = None
-
 try:
-    APPDRIVE_EMAIL = getConfig('APPDRIVE_EMAIL')
-    APPDRIVE_PASS = getConfig('APPDRIVE_PASS')
-    if len(APPDRIVE_EMAIL) == 0 or len(APPDRIVE_PASS) == 0:
+    UNIFIED_EMAIL = getConfig('UNIFIED_EMAIL')
+    UNIFIED_PASS = getConfig('UNIFIED_PASS')
+    if len(UNIFIED_EMAIL) == 0 or len(UNIFIED_PASS) == 0:
         raise KeyError
 except KeyError:
-    APPDRIVE_EMAIL = None
-    APPDRIVE_PASS = None
-
+    UNIFIED_EMAIL = None
+    UNIFIED_PASS = None
+try:
+    HUBDRIVE_CRYPT = getConfig('HUBDRIVE_CRYPT')
+    if len(HUBDRIVE_CRYPT) == 0:
+        raise KeyError
+except:
+    HUBDRIVE_CRYPT = None
+try:
+    KATDRIVE_CRYPT = getConfig('KATDRIVE_CRYPT')
+    if len(KATDRIVE_CRYPT) == 0:
+        raise KeyError
+except:
+    KATDRIVE_CRYPT = None
+try:
+    DRIVEFIRE_CRYPT = getConfig('DRIVEFIRE_CRYPT')
+    if len(DRIVEFIRE_CRYPT) == 0:
+        raise KeyError
+except:
+    DRIVEFIRE_CRYPT = None
+try:
+    XSRF_TOKEN = getConfig('XSRF_TOKEN')
+    if len(XSRF_TOKEN) == 0:
+        raise KeyError
+except:
+    XSRF_TOKEN = None
+try:
+    laravel_session = getConfig('laravel_session')
+    if len(laravel_session) == 0:
+        raise KeyError
+except:
+    laravel_session = None
 try:
     GD_INFO = getConfig('GD_INFO')
     if len(GD_INFO) == 0:

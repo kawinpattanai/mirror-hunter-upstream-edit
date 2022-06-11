@@ -273,10 +273,10 @@ class MirrorListener:
 
             if MIRROR_LOGS:
                 for i in MIRROR_LOGS:
-                    """
+                    
                     if SOURCE_LINK is True:
-                        buttons.buildbutton("🔗 Source Link", S_link)
-                    """
+                        buttons.buildbutton("🔗 Source Link", link)
+                    
                     indexmsg = ''
                     for index, item in enumerate(list(files), start=1):
                         msg_id = files[item]
@@ -345,10 +345,10 @@ class MirrorListener:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
-            """
+            
             if SOURCE_LINK is True:
-                buttons.buildbutton(f"🔗 Source Link", S_link)
-            """
+                buttons.buildbutton(f"🔗 Source Link", link)
+            
             uploader = f'\n\n<b>#Uploaded By: </b>{self.tag}\n'
             if MIRROR_LOGS:
                 try:

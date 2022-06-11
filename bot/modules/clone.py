@@ -56,7 +56,7 @@ def cloneNode(update, context, multi=0):
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
         
-    temp = message.text.split(" |", maxsplit=1)
+    temp = update.message.text.split(" |", maxsplit=1)
     args = temp[0].split(" ")
     
     #args = update.message.text.split(" ", maxsplit=1)

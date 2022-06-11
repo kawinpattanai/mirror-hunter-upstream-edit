@@ -58,7 +58,7 @@ def cloneNode(update, context, multi=0):
     
     uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
     args = update.message.text.split(" ", maxsplit=1)
-    mesg = self.message.text.split('\n')
+    mesg = update.message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)
     reply_to = update.message.reply_to_message
     slmsg = f"Added by: {uname} \nUser ID: <code>{self.user_id}</code>\n\n"

@@ -237,8 +237,9 @@ def is_gdrive_link(url: str):
 def is_gdtot_link(url: str):
     url = match(r'https?://.+\.gdtot\.\S+', url)
     return bool(url)
+
 def is_appdrive_link(url: str):
-    url = match(r'https?://(?:\S*\.)?(?:appdrive|driveapp)\.in/\S+', url)
+    url = match(r'https?://(appdrive|driveapp|driveace|gdflix|drivelinks|drivebit|drivesharer|drivepro)\.\S+', url)
     return bool(url)
 
 def is_mega_link(url: str):

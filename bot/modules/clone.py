@@ -75,15 +75,21 @@ def cloneNode(update, context, multi=0):
         else:
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
     is_gdtot = is_gdtot_link(link)
-    is_appdrive = is_appdrive_link(link)
-    if (is_gdtot or is_appdrive):
+    is_unified = is_unified_link(link)
+    is_udrive = is_udrive_link(link)
+    is_sharer = is_sharer_link(link)
+    if (is_gdtot or is_unified or is_udrive or is_sharer):
         msg = sendMessage(f"Processing: <code>{link}</code>", context.bot, update)
         LOGGER.info(f"Processing: {link}")
         try:
             if is_gdtot:
                 link = gdtot(link)
-            if is_appdrive:
-                link = appdrive(link)
+            if is_unified:
+                link = unified(link)
+            if is_udrive:
+                link = udrive(link)
+            if is_sharer:
+                link = sharer_pw(link)
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)
@@ -155,7 +161,7 @@ def cloneNode(update, context, multi=0):
             pmwarn = ''
         uploadmsg = sendMarkup(result + cc + pmwarn + warnmsg, context.bot, update, button)
         Thread(target=auto_delete_upload_message, args=(bot, update.message, uploadmsg)).start()
-        if (is_gdtot or is_appdrive):
+        if (is_gdtot or is_unified or is_udrive or is_sharer):
             gd.deletefile(link)
         if MIRROR_LOGS:
             try:

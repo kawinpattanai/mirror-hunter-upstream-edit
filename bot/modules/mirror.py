@@ -281,7 +281,7 @@ class MirrorListener:
                     indexmsg = ''
                     for index, item in enumerate(list(files), start=1):
                         msg_id = files[item]
-                        link = f"https://t.me/c/{chat_id}/{msg_id}"
+                        link = f"{msg_id}"
                         indexmsg += f"{index}. <a href='{link}'>{item}</a>\n"
                         if len(indexmsg.encode('utf-8') + msg.encode('utf-8')) > 4000:
                             sleep(1.5)

@@ -239,6 +239,7 @@ class MirrorListener:
         link_id = str(LINK_LOGS)[5:][:-1]
         S_link =  f"https://t.me/c/{link_id}/{msg_id}"
             '''
+            
         msg = f'<b>Name: </b><code>{name.replace("<", "")}</code>\n\n<b>Size: </b>{size}'
         if AUTO_DELETE_UPLOAD_MESSAGE_DURATION != -1:
             reply_to = self.message.reply_to_message
@@ -273,10 +274,10 @@ class MirrorListener:
 
             if MIRROR_LOGS:
                 for i in MIRROR_LOGS:
-                    
+                    '''
                     if SOURCE_LINK is True:
                         buttons.buildbutton("🔗 Source Link", link)
-                    
+                    '''
                     indexmsg = ''
                     for index, item in enumerate(list(files), start=1):
                         msg_id = files[item]
@@ -345,10 +346,10 @@ class MirrorListener:
                 buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
             if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
                 buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
-            
+            '''
             if SOURCE_LINK is True:
                 buttons.buildbutton(f"🔗 Source Link", link)
-            
+            '''
             uploader = f'\n\n<b>#Uploaded By: </b>{self.tag}\n'
             if MIRROR_LOGS:
                 try:

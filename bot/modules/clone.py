@@ -12,8 +12,8 @@ from bot.helper.telegram_helper.filters import CustomFilters
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import dispatcher, LOGGER, CLONE_LIMIT, STOP_DUPLICATE, download_dict, download_dict_lock, Interval, MIRROR_LOGS, BOT_PM, CHANNEL_USERNAME, bot, FSUB_CHANNEL_ID, FSUB, AUTO_DELETE_UPLOAD_MESSAGE_DURATION
-from bot.helper.ext_utils.bot_utils import get_readable_file_size, is_gdrive_link, is_gdtot_link, is_appdrive_link, new_thread
-from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, appdrive
+from bot.helper.ext_utils.bot_utils import *
+from bot.helper.mirror_utils.download_utils.direct_link_generator import *
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 
 @new_thread
@@ -76,22 +76,19 @@ def cloneNode(update, context, multi=0):
             tag = reply_to.from_user.mention_html(reply_to.from_user.first_name)
     is_gdtot = is_gdtot_link(link)
     is_appdrive = is_appdrive_link(link)
-    if is_gdtot:
+    if (is_gdtot or is_appdrive):
         msg = sendMessage(f"Processing: <code>{link}</code>", context.bot, update)
+        LOGGER.info(f"Processing: {link}")
         try:
-            link = gdtot(link)
+            if is_gdtot:
+                link = gdtot(link)
+            if is_appdrive:
+                link = appdrive(link)
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)
             return sendMessage(str(e), context.bot, update)
-    elif is_appdrive:
-        msg = sendMessage(f"Processing: <code>{link}</code>", context.bot, update)
-        try:
-            link = appdrive(link)
-            deleteMessage(context.bot, msg)
-        except DirectDownloadLinkException as e:
-            deleteMessage(context.bot, msg)
-            return sendMessage(str(e), context.bot, update)
+ 
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
@@ -158,12 +155,8 @@ def cloneNode(update, context, multi=0):
             pmwarn = ''
         uploadmsg = sendMarkup(result + cc + pmwarn + warnmsg, context.bot, update, button)
         Thread(target=auto_delete_upload_message, args=(bot, update.message, uploadmsg)).start()
-        if is_gdtot:
+        if (is_gdtot or is_appdrive):
             gd.deletefile(link)
-        elif is_appdrive:
-            if apdict.get('link_type') == 'login':
-                LOGGER.info(f"Deleting: {link}")
-                gd.deleteFile(link)
         if MIRROR_LOGS:
             try:
                 for i in MIRROR_LOGS:

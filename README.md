@@ -26,8 +26,8 @@ I did some fixes on bot code and made some changes in these scrapers for bypassi
 Fork This Repo(Recommanded) or Fork [MLTB](https://github.com/anasty17/mirror-leech-telegram-bot) with all branches or use his public template.
 
 ### STEP - 2: (ONLY FOR THOSE WHO FORKED MLTB)
-FOR THE PEOPLE WHO FORKED MLTB:
-Go to 'heroku' branch in your forked repo and add this line in requirements.txt. (MUST else Sharer.pw Links won't be cloned):
+FOR THE PEOPLE WHO FORKED MLTB: 
+Go to 'heroku' branch in your forked repo and add these lines in requirements.txt. (MUST else might face errors):
 ```
 aiohttp
 asgiref

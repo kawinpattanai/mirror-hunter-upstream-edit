@@ -1,146 +1,79 @@
-# <b>MIRROR HUNTER</b>
+#  UPSTREAM_REPO.
+
+This is a modified repo of [arata74's MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER) & uses [anasty17's mltb](https://github.com/anasty17/mirror-leech-telegram-bot/tree/heroku) 'heroku' branch for bypassing ban.
 
 ![MIRROR HUNTER](https://media.giphy.com/media/dikubVwoUUBxLgpraV/giphy.gif?cid=790b7611c1fd9acab35e7fc75f7447316865d93043fc77b3&rid=giphy.gif&ct=s)
 
-![GitHub Repo stars](https://img.shields.io/github/stars/anime-republic/MIRROR-HUNTER?color=blue&style=plastic)
-![GitHub forks](https://img.shields.io/github/forks/anime-republic/MIRROR-HUNTER?color=green&style=plastic)
-![GitHub watchers](https://img.shields.io/github/watchers/anime-republic/MIRROR-HUNTER?style=plastic)
-![Docker Pulls](https://img.shields.io/github/contributors/anime-republic/MIRROR-HUNTER?style=plastic)
-![Docker Pulls](https://img.shields.io/docker/pulls/arata74/mirrorhunter?style=plastic)
-[![Channel](https://img.shields.io/badge/Support%20Group-!-red?style=plastic)](https://t.me/XcodersHubChat)
+# Features & Fixes:
 
-**This Mirror Bot** is a _multipurpose_ Telegram Bot writen in Python for mirroring files on the Internet to our beloved Google Drive.
+## ALL FEATURES OF [MLTB](https://github.com/anasty17/mirror-leech-telegram-bot) & [MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER)
 
-# Repo last commit
-| Repo Name  | Status | Commit |
-| ------------- | ------------- | ------------- |
-| MIRROR HUNTER | ![Docker Pulls](https://img.shields.io/github/last-commit/anime-republic/MIRROR-HUNTER?style==for-the-badge) | ![Docker Pulls](https://img.shields.io/github/commit-activity/w/anime-republic/Mirror-New?style=flat-square) |
+## By [Maverick](https://telegram.dog/Maverick9099):
+- Direct Clone from 
+  > GDToT, AppDrive, DriveApp, DriveLinks, DriveAce, DriveBit, DriveSharer, DrivePro, GDFlix, HubDrive, KatDrive, DriveHub, Kolop, DriveFire, DriveBuzz and Sharer.pw links
+- Fixed PyrogramEngine Errors!
+- Fixed Last Summary Message of Leech (Now it goes to Leech Log Channel instead of Mirror Log Channel)
+- Fixed MEGA (Earlier it was conflicting)
+- Many more compatibility fixes !
 
-# Combining Repo
-| Repo Name  | Status | Commit |
-| ------------- | ------------- | ------------- |
-| mirror-leech-telegram-bot  | ![Docker Pulls](https://img.shields.io/github/last-commit/anasty17/mirror-leech-telegram-bot?style==for-the-badge)  | ![Docker Pulls](https://img.shields.io/github/commit-activity/w/anasty17/mirror-leech-telegram-bot?style=flat-square) |
-| MirrorX  | ![Docker Pulls](https://img.shields.io/github/last-commit/iamLiquidX/MirrorX?style==for-the-badge)  | ![Docker Pulls](https://img.shields.io/github/commit-activity/w/iamLiquidX/MirrorX?style=flat-square) |
-| Helios-Mirror  | ![Docker Pulls](https://img.shields.io/github/last-commit/arshsisodiya/helios-mirror?style==for-the-badge)  | ![Docker Pulls](https://img.shields.io/github/commit-activity/w/iamLiquidX/MirrorX?style=flat-square) |
+### Note:
+I am not the owner of these scrapers or codes. The credit goes to the developers who developed these scripts & codes.
+I did some fixes on bot code and made some changes in these scrapers for bypassing more google drive sharers and fixed some issues regarding the compatibility with the code.
 
-# Features supported:
-<details>
-    <summary><b>Click Here For More Details</b></summary>
+# DEPLOY:
 
-## Additional Features
-- Updater (**NOTE**: You must upload your **token.pickle** to Index and fill your **token.pickle** url to **TOKEN_PICKLE_URL**, because your **token.pickle** will deleted after update, for more info please check [Setting up config file](https://github.com/Anime-Republic/MIRROR-HUNTER#setting-up-config-file))
-- Limiting size Torrent/Direct, Tar/Unzip, Mega, cloning Google Drive support
-- Stop duplicate cloning Google Drive & mirroring Mega support
-- Tar/Unzip Google Drive link support
-- Sudo with Database support
-- Multiple Trackers support
-- Extracting **tar.xz** support
-- Counting Google Drive link
-- Heroku config support
-- View Link button
-- Shell and Executor
-- YT-DLP
-- Support message send to log channel/group    
-- Search All Drive
-- Leech Forward to log and pm
-- Direct links Supported:
+### STEP - 1:
+Fork This Repo(Recommanded) or Fork [MLTB](https://github.com/anasty17/mirror-leech-telegram-bot) with all branches or use his public template.
+
+### STEP - 2: (ONLY FOR THOSE WHO FORKED MLTB)
+FOR THE PEOPLE WHO FORKED MLTB:
+Go to 'heroku' branch in your forked repo and add this line in requirements.txt. (MUST else Sharer.pw Links won't be cloned):
 ```
-letsupload.io
-hxfile.co
-anonfiles.com
-bayfiles.com
-antfiles
-fembed.com
-fembed.net
-femax20.com
-layarkacaxxi.icu
-fcdn.stream
-sbplay.org
-naniplay.com
-naniplay.nanime.in
-naniplay.nanime.biz
-sbembed.com
-streamtape.com
-streamsb.net
-feurl.com
-pixeldrain.com
-racaty.net
-1fichier.com
-1drv.ms (Only works for file not folder or business account)
-uptobox.com (Uptobox account must be premium)
-solidfiles.com
+aiohttp
+asgiref
+six
+gc-python-utils
+cloudscraper
 ```
-
-## From Original Repos
-- Mirroring direct download links, Torrent, and Telegram files to Google Drive
-- Mirroring Mega.nz links to Google Drive (If your Mega account not premium, it will limit 5GB/6 hours)
-- Copy files from someone's Drive to your Drive (Using Autorclone)
-- Download/Upload progress, Speeds and ETAs
-- Mirror all Youtube-dl supported links
-- Docker support
-- Uploading to Team Drive
-- Index Link support
-- Service Account support
-- Delete files from Drive
-- Shortener support
-- Custom Filename (Only for URL, Telegram files and Youtube-dl. Not for Mega links and Magnet/Torrents)
-- Extracting password protected files, using custom filename and download from password protected Index Links see these examples:
-<p><a href="https://telegra.ph/Magneto-Python-Aria---Custom-Filename-Examples-01-20"> <img src="https://img.shields.io/badge/see%20on%20telegraph-blue?style=for-the-badge" width="150""/></a></p>
-
-- Extract these filetypes and uploads to Google Drive
+ADD below line in `Dockerfile` of heroku branch:
 ```
-ZIP, RAR, TAR, 7z, ISO, WIM, CAB, GZIP, BZIP2, 
-APM, ARJ, CHM, CPIO, CramFS, DEB, DMG, FAT, 
-HFS, LZH, LZMA, LZMA2, MBR, MSI, MSLZ, NSIS, 
-NTFS, RPM, SquashFS, UDF, VHD, XAR, Z.
+RUN apt-get update && apt-get install -y ffmpeg
 ```
+![EXAMPLE](https://telegra.ph/file/0864bc748803c7f14fb3d.png)
 
-</details>
+### STEP - 3:
+Create config.env file using this template. [config_sample.env](https://raw.githubusercontent.com/majnurangeela/mirror-hunter-upstream/tempuse/config_sample.env).
 
-## How To Deploy it?
-<p><a href="https://github.com/Anime-Republic/MIRROR-HUNTER/wiki"> <img src="https://img.shields.io/badge/Deploy%20Guide-red?style=for-the-badge&logo=github" width="200""/></a></p>
+Don't touch `UPSTREAM_REPO` & `UPSTREAM_BRANCH` env vars else all these features won't be there !
+Don't Use `ACCOUNTS_ZIP_URL` & `TOKEN_PICKLE_URL` (Broken). Upload accounts folder & token.pickle files in heroku branch
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/-U9usz?referralCode=UmziEH)
+### STEP - 4:
+Fill All Action Secrets.
 
-## Use gits secret to make config
-<p><a href="https://github.com/Arata74/HUNTER-ARIA/raw/main/config.env.example"> <img src="https://img.shields.io/badge/Config%20Template-black?style=for-the-badge&logo=github" width="200""/></a></p>
-<p><a href="https://gist.github.com/mine"> <img src="https://img.shields.io/badge/Gits-black?style=for-the-badge&logo=github" width="100""/></a></p>
+- `HEROKU_API`: Get it from your heroku account.
+- `HEROKU_APP_NAME`: Set unique appname.
+- `HEROKU_EMAIL`: Heroku Email ID
+- `CONFIG_FILE_URL`: Optional ENV.. You can upload config.env on gist or in heroku branch
 
-- copy raw address (example: https://gist.github.com/Arata74/59be08e3ca1f147b9cb7145080c03cb7/raw/d733ce97ad1fad9a788da2ce80cc85b6087e67c3/rf55555)
+### STEP - 5:
+RUN workflow with heroku branch from GitHub Action section !
 
-- remove commit id (example: https://gist.github.com/Arata74/59be08e3ca1f147b9cb7145080c03cb7/raw/rf55555)
-    
-## Generate Database
-<details>
-    <summary><b>Click Here For More Details</b></summary>
+## IMPORTANT ! :
 
-**1. Using ElephantSQL**
-- Go to https://elephantsql.com and create account (skip this if you already have **ElephantSQL** account)
-- Hit `Create New Instance`
-- Follow the further instructions in the screen
-- Hit `Select Region`
-- Hit `Review`
-- Hit `Create instance`
-- Select your database name
-- Copy your database url, and fill to `DATABASE_URL` in config
+For the simplification I've made some terms..
 
-**2. Using Heroku PostgreSQL**
-<p><a href="https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1"> <img src="https://img.shields.io/badge/See%20Dev.to-black?style=for-the-badge&logo=dev.to" width="160""/></a></p>
+- `UNIFIED` = AppDrive, DriveApp, GDFlix, DriveBit, DriveLinks, DriveSharer, DriveAce, DrivePro Sharer Links
+- `UNIFIED_EMAIL`: USE SAME GMAIL ACCOUNT IN ABOVE MENTIONED SHARERS
+- `UNIFIED_PASS` : USE SAME PASSWORD IN ABOVE MENTIONED SHARERS
 
-</details>
+- `HUBDRIVE_CRYPT`: IT WILL BE USED TO BYPASS HUBDRIVE LINKS ONLY.
+- `KATDRIVE_CRYPT`: IT WILL BE USED TO BYPASS KATDRIVE, KOLOP, DRIVEHUB LINKS.
+- `DRIVEFIRE_CRYPT`: IT WILL BE USED TO BYPASS DRIVEFIRE & DRIVEBUZZ LINKS.
 
+- `XSRF_TOKEN` & `laravel_session`: BOTH COOKIES WILL BE USED TO BYPASS SHARER.PW LINKS.
 
-# Credits
-- [`out386`](https://github.com/out386) heavily inspired from his Telegram Bot written in Typescript
-- [`Izzy12`](https://github.com/lzzy12) for build up of this bot from scratch
-- [`jaskaranSM`](https://github.com/jaskaranSM) for build up of this bot from scratch
-- [`Dank-del`](https://github.com/Dank-del) for base repo
-- [`magneto261290`](https://github.com/magneto261290) for some features
-- [`SVR666`](https://github.com/SVR666) for some features & fixes
-- [`anasty17`](https://github.com/anasty17) for some features & help
-- [`breakdowns`](https://github.com/breakdowns) for slam-mirrorbot
-- [`zevtyardt`](https://github.com/zevtyardt) for some direct links
-- [`xyou365`](https://github.com/xyou365) for Service Accounts script.
-- [`Gautam1834`](https://github.com/Gautam1834) for lot of features.
-- [`arshsisodiya`](https://github.com/arshsisodiya) for leech log and forward function
-   
+## CREDITS:
+- [Maverick](https://github.com/majnurangeela) for integration and compatibility fixes
+- [Anasty17](https://github.com/anasty17/mirror-leech-telegram-bot) for his MLTB & Heroku Bypass !
+- [xcscxr](https://github.com/xcscxr) for his wonderful google drive link scrapers !
+- [arata74](https://github.com/arata74) or [ANIME-REPUBLIC](https://github.com/ANIME-REPUBLIC) For Base Repo

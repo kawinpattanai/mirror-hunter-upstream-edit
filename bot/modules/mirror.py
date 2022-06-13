@@ -606,7 +606,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                 '''
 
     elif isQbit and (is_magnet(link) or ospath.exists(link)):
-        Thread(target=QbDownloader(listener).add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, qbitsel)).start()
+        Thread(target=QbDownloader.add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, qbitsel)).start()
 
     else:
         if len(mesg) > 1:

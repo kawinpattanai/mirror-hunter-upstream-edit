@@ -557,6 +557,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                 LOGGER.info(str(e))
                 if str(e).startswith('ERROR:'):
                     return sendMessage(str(e), bot, update)
+    """              
     elif isQbit and not is_magnet(link) and not ospath.exists(link):
         if link.endswith('.torrent'):
             content_type = None
@@ -579,9 +580,11 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                 else:
                     LOGGER.error(str(e))
                     return sendMessage(tag + " " + error, bot, update)
+        
         else:
             msg = "Qb commands for torrents only. if you are trying to dowload torrent then report."
             return sendMessage(msg, bot, update)
+            """
 
     listener = MirrorListener(bot, update, isZip, extract, isQbit, isLeech, pswd, tag)
 

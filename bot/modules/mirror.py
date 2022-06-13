@@ -604,8 +604,8 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
             else:
                 sendMessage(f"{uname}, <b>Your Requested MEGA File Has Been Added To</b> /{BotCommands.StatusCommand}", bot, update)
                 '''
-
-    elif isQbit and (is_magnet(link) or ospath.exists(link)):
+    elif isQbit:
+    #elif isQbit and (is_magnet(link) or ospath.exists(link)):
         Thread(target=QbDownloader(listener).add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', qbitsel)).start()
 
     else:

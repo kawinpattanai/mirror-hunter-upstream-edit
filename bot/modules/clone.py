@@ -100,7 +100,8 @@ def cloneNode(update, context, multi=0):
     is_unified = is_unified_link(link)
     is_udrive = is_udrive_link(link)
     is_sharer = is_sharer_link(link)
-    if (is_gdtot or is_unified or is_udrive or is_sharer):
+    is_drivehubs = is_drivehubs_link(link)
+    if (is_gdtot or is_unified or is_udrive or is_sharer or is_drivehubs):
         msg = sendMessage(f"Processing: <code>{link}</code>", context.bot, update)
         LOGGER.info(f"Processing: {link}")
         try:
@@ -112,6 +113,8 @@ def cloneNode(update, context, multi=0):
                 link = udrive(link)
             if is_sharer:
                 link = sharer_pw(link)
+            if is_drivehubs:
+                link = drivehubs(link)
             deleteMessage(context.bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)

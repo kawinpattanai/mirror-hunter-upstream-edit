@@ -501,59 +501,35 @@ def unified(url: str) -> str:
     if info_parsed['error']:
         raise DirectDownloadLinkException(f"ERROR! {info_parsed['error_message']}")
     
-    if urlparse(url).netloc == 'appdrive.in' and not info_parsed['error']:
+    if urlparse(url).netloc == 'appdrive.in':
         flink = info_parsed['gdrive_link']
         return flink
     
-    if urlparse(url).netloc == 'driveapp.in' and not info_parsed['error']:
+    elif urlparse(url).netloc == 'driveapp.in':
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn')]/@href")[0]
         flink = drive_link
         return flink
-
-    if urlparse(url).netloc == 'drivesharer.in' and not info_parsed['error']:
+      
+    else:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
         flink = drive_link
+        info_parsed['src_url'] = url
         return flink
-
-    if urlparse(url).netloc == 'drivebit.in' and not info_parsed['error']:
-        res = client.get(info_parsed['gdrive_link'])
-        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
-        flink = drive_link
-        return flink
-        
-    if urlparse(url).netloc == 'driveace.in' and not info_parsed['error']:
-        res = client.get(info_parsed['gdrive_link'])
-        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
-        flink = drive_link
-        return flink
-    
-    if urlparse(url).netloc == 'drivelinks.in' and not info_parsed['error']:
-        res = client.get(info_parsed['gdrive_link'])
-        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
-        flink = drive_link
-        return flink
-    
-    if urlparse(url).netloc == 'drivepro.in' and not info_parsed['error']:
-        res = client.get(info_parsed['gdrive_link'])
-        drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
-        flink = drive_link
-        return flink
-
-    flink = info_parsed['gdrive_link']
-    info_parsed['src_url'] = url
-    
-    return flink
   
 def parse_info(res, url):
     info_parsed = {}
-    #title = re_findall('>(.*?)<\/h4>', res.text)[0] --- Not Important
     if 'drivebuzz' in url:
         info_chunks = findall('<td\salign="right">(.*?)<\/td>', res.text)
+    elif 'sharer.pw' in url:
+        f = findall(">(.*?)<\/td>", res.text)
+        info_parsed = {}
+        for i in range(0, len(f), 3):
+            info_parsed[f[i].lower().replace(" ", "_")] = f[i + 2]
+        return info_parsed
     else:
         info_chunks = findall('>(.*?)<\/td>', res.text)
-    #info_parsed['title'] = title  --- Not Important
     for i in range(0, len(info_chunks), 2):
         info_parsed[info_chunks[i]] = info_chunks[i+1]
     return info_parsed
@@ -575,8 +551,7 @@ def udrive(url: str) -> str:
         
     res = client.get(url)
     info_parsed = parse_info(res, url)
-    
-    #if 'drivebuzz' not in url:
+
     info_parsed['error'] = False
     
     up = urlparse(url)
@@ -613,15 +588,7 @@ def udrive(url: str) -> str:
     info_parsed['gdrive_url'] = f"https://drive.google.com/open?id={gd_id}"
     info_parsed['src_url'] = url
     flink = info_parsed['gdrive_url']
-
     return flink  
-
-def parse_infos(res):
-    f = findall(">(.*?)<\/td>", res.text)
-    info_parsed = {}
-    for i in range(0, len(f), 3):
-        info_parsed[f[i].lower().replace(' ', '_')] = f[i+2]
-    return info_parsed
 
 def sharer_pw(url, forced_login=False):
     client = cloudscraper.create_scraper(delay=10, browser='chrome')
@@ -636,7 +603,7 @@ def sharer_pw(url, forced_login=False):
     
     ddl_btn = etree.HTML(res.content).xpath("//button[@id='btndirect']")
     
-    info_parsed = parse_infos(res)
+    info_parsed = parse_info(res, url)
     info_parsed['error'] = True
     info_parsed['src_url'] = url
     info_parsed['link_type'] = 'login' # direct/login

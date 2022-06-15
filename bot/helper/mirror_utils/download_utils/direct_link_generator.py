@@ -666,6 +666,7 @@ def drivehubs(url: str) -> str:
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()
     sleep(10)
     flink = wd.current_url
+    wd.close()
     
     if 'drive.google.com' in url:
       return flink

@@ -132,19 +132,19 @@ def get_readable_message():
             ]:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
-                    msg += f"\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\n<b>📦 Total Size:</b> {download.size()}"
+                    msg += f"\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b> {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\n<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
                 else:
-                    msg += f"\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\n<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
                 msg += f"\n<b>🏎️ Speed:</b> {download.speed()}\n<b>⏳ ETA:</b> {download.eta()}"
                 try:
-                    msg += f"\n<b>🌱 Seeders:</b> {download.aria_download().num_seeders}" \
+                    msg += f"\n\n<b>🌱 Seeders:</b> {download.aria_download().num_seeders}" \
                            f"\n<b>📶 Peers:</b> {download.aria_download().connections}\n<b>⚙️ Engine:</b> Aria"
                 except:
                     pass
                 try:
-                    msg += f"\n<b>🌱 Seeders:</b> {download.torrent_info().num_seeds}" \
+                    msg += f"\n\n<b>🌱 Seeders:</b> {download.torrent_info().num_seeds}" \
                            f"\n<b>🌍 Leechers:</b> {download.torrent_info().num_leechs}\n<b>⚙️ Engine:</b> Qbit"
                 except:
                     pass
@@ -161,8 +161,8 @@ def get_readable_message():
             msg += "\n\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
-        bmsg = f"<b>🖥 CPU:</b> {cpu_percent()}% | <b>💈 FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-        bmsg += f"\n<b>💾 RAM:</b> {virtual_memory().percent}% | <b>📊 UPTIME:</b> {get_readable_time(time() - botStartTime)}"
+        bmsg = f"\n<b>🖥 CPU:</b> {cpu_percent()}% | <b>💈 FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
+        bmsg += f"\n\n<b>💾 RAM:</b> {virtual_memory().percent}% | <b>📊 UPTIME:</b> {get_readable_time(time() - botStartTime)}"
         dlspeed_bytes = 0
         upspeed_bytes = 0
         for download in list(download_dict.values()):

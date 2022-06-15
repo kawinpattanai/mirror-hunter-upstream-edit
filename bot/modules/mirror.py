@@ -209,7 +209,7 @@ class MirrorListener:
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
         if not self.isPrivate and INCOMPLETE_TASK_NOTIFIER and DB_URI is not None:
             DbManger().rm_complete_task(self.message.link)
-        msg = f"<b>Name: </b><code>{escape(name)}</code>\n\n<b>Size: </b>{size}"
+        msg = f"<b>Name: </b><code>{escape(name)}</code>\n\n<b>📦 Size: </b>{size}"
         uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
         chat_id = str(LEECH_LOG)[5:][:-1]
         buttons = ButtonMaker()
@@ -217,7 +217,7 @@ class MirrorListener:
         mesg = self.message.text.split('\n')
         message_args = mesg[0].split(' ', maxsplit=1)
         reply_to = self.message.reply_to_message
-        slmsg = f"Added by: {uname} \nUser ID: <code>{self.user_id}</code>\n\n"
+        slmsg = f"Added by: {uname} \n👥 User ID: <code>{self.user_id}</code>\n\n"
         if LINK_LOGS:
             try:
                 source_link = message_args[1]
@@ -240,7 +240,7 @@ class MirrorListener:
         S_link =  f"https://t.me/c/{link_id}/{msg_id}"
             '''
             
-        msg = f'<b>Name: </b><code>{name.replace("<", "")}</code>\n\n<b>Size: </b>{size}'
+        msg = f'<b>Name: </b><code>{name.replace("<", "")}</code>\n\n<b>📦 Size: </b>{size}'
         if AUTO_DELETE_UPLOAD_MESSAGE_DURATION != -1:
             reply_to = self.message.reply_to_message
             if reply_to is not None:
@@ -249,24 +249,24 @@ class MirrorListener:
             if self.message.chat.type == 'private':
                 warnmsg = ''
             else:
-                warnmsg = f'\n<b>This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
+                warnmsg = f'\n<b>❗ This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
         else:
             warnmsg = ''
         if BOT_PM and self.message.chat.type != 'private':
-            pmwarn = f"\n<b>I have sent files in PM.</b>\n"
-            pmwarn_mirror = f"\n<b>I have sent links in PM.</b>\n"
+            pmwarn = f"\n<b>I have sent files in PM 😉.</b>\n"
+            pmwarn_mirror = f"\n<b>I have sent links in PM 😉.</b>\n"
         elif self.message.chat.type == 'private':
             pmwarn = ''
             pmwarn_mirror = ''
         else:
             pmwarn = ''
             pmwarn_mirror = ''
-        logwarn = f"\n<b>I have sent files in Log Channel.</b>\n"
+        logwarn = f"\n<b>I have sent files in Log Channel.(Join Leech Log channel 🤫) </b>\n"
         if self.isLeech:
             count = len(files)
-            msg += f'\n<b>Total Files: </b>{count}'
+            msg += f'\n<b>🗂 Total Files: </b>{count}'
             if typ != 0:
-                msg += f'\n<b>Corrupted Files: </b>{typ}'
+                msg += f'\n<b>❗ Corrupted Files: </b>{typ}'
             msg += f'\n<b>#Leeched By: </b>{self.tag}\n'
             if BOT_PM:
                 message = sendMessage(msg + pmwarn + warnmsg, self.bot, self.update)
@@ -321,10 +321,10 @@ class MirrorListener:
             else:
                 update_all_messages()
         else:
-            msg += f'\n\n<b>Type: </b>{typ}'
+            msg += f'\n\n<b>⚙️ Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>SubFolders: </b>{folders}'
-                msg += f'\n<b>Files: </b>{files}'
+                msg += f'\n<b>🗂 SubFolders: </b>{folders}'
+                msg += f'\n<b>📑 Files: </b>{files}'
             link = short_url(link)
             buttons.buildbutton("☁️ Drive Link", link)
             LOGGER.info(f'Done Uploading {name}')
@@ -431,7 +431,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
             pass
     if BOT_PM:
         try:
-            msg1 = f'Added your Requested link to Download\n'
+            msg1 = f'Added your Requested link to Download ☺️\n'
             send = bot.sendMessage(update.message.from_user.id, text=msg1, )
             send.delete()
         except Exception as e:
@@ -442,9 +442,9 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
             channel = CHANNEL_USERNAME
             botstart = f"http://t.me/{b_uname}"
             keyboard = [
-                [InlineKeyboardButton("Click Here to Start Me", url=f"{botstart}")]]
+                [InlineKeyboardButton("Click Here to Start Me 😜", url=f"{botstart}")]]
             message = sendMarkup(
-                f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\nFrom now on i will give link and leeched files in PM and log channel only",
+                f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet 😁.</b>\n\nFrom now on i will give link and leeched files in PM and log channel only 🤫 (Join Log Channel).",
                 bot, update, reply_markup=InlineKeyboardMarkup(keyboard))
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
@@ -538,7 +538,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
             pass
 
     if not is_url(link) and not is_magnet(link) and not ospath.exists(link):
-        help_msg = "Send link along with command line"
+        help_msg = "❗️ Send link along with command line"
         help_msg += "\nor reply to link or file"
         msg = sendMessage(help_msg, bot, update)
         Thread(target=auto_delete_message, args=(bot, update.message, msg)).start()

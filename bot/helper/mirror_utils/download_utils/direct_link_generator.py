@@ -660,7 +660,7 @@ def drivehubs(url: str) -> str:
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    wd = webdriver.Chrome('/usr/src/app/chromedriver',chrome_options=chrome_options)
+    wd = webdriver.Chrome(executable_path='/usr/lib/chromium-browser/chromedriver',chrome_options=chrome_options)
     
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()

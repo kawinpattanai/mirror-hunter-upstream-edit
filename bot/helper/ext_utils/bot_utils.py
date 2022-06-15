@@ -132,11 +132,11 @@ def get_readable_message():
             ]:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
-                    msg += f"\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b> {download.size()}"
+                    msg += f"\n\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b> {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
                 else:
-                    msg += f"\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
                 msg += f"\n<b>🏎️ Speed:</b> {download.speed()}\n<b>⏳ ETA:</b> {download.eta()}"
                 try:
                     msg += f"\n\n<b>🌱 Seeders:</b> {download.aria_download().num_seeders}" \
@@ -148,21 +148,21 @@ def get_readable_message():
                            f"\n<b>🌍 Leechers:</b> {download.torrent_info().num_leechs}\n<b>⚙️ Engine:</b> Qbit"
                 except:
                     pass
-                msg += f"\n\n<b>👥 User:</b> {download.message.from_user.first_name}(<code>{download.message.from_user.id}</code>)\n<b>⚠️ Warn:</b> <code>/warn {download.message.from_user.id}</code>\n<b>❌ Cancel:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n\n___________________________"
+                msg += f"\n\n<b>👥 User:</b> {download.message.from_user.first_name}(<code>{download.message.from_user.id}</code>)\n<b>⚠️ Warn:</b> <code>/warn {download.message.from_user.id}</code>\n<b>❌ Cancel:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n___________________________"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>📦 Size: </b>{download.size()}"
                 msg += f"\n<b>🏎️ Speed: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
                 msg += f" | <b>⬆️ Uploaded: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
                 msg += f"\n<b>⚖️ Ratio: </b>{round(download.torrent_info().ratio, 3)}"
                 msg += f" | <b>⌛️ Time: </b>{get_readable_time(download.torrent_info().seeding_time)}"
-                msg += f"\n\n<b>👥 User:</b> {download.message.from_user.first_name}(<code>{download.message.from_user.id}</code>)\n<b>⚠️ Warn:</b> <code>/warn {download.message.from_user.id}</code>\n<b>❌ Cancel:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n\n___________________________"
+                msg += f"\n\n<b>👥 User:</b> {download.message.from_user.first_name}(<code>{download.message.from_user.id}</code>)\n<b>⚠️ Warn:</b> <code>/warn {download.message.from_user.id}</code>\n<b>❌ Cancel:</b> <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n___________________________"
             else:
                 msg += f"\n<b>📦 Size: </b>{download.size()}"
             msg += "\n\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
-        bmsg = f"\n<b>🖥 CPU:</b> {cpu_percent()}% | <b>💈 FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
-        bmsg += f"\n\n<b>💾 RAM:</b> {virtual_memory().percent}% | <b>📊 UPTIME:</b> {get_readable_time(time() - botStartTime)}"
+        bmsg = f"<b>🖥 CPU:</b> {cpu_percent()}% | <b>💈 FREE:</b> {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)}"
+        bmsg += f"\n<b>💾 RAM:</b> {virtual_memory().percent}% | <b>📊 UPTIME:</b> {get_readable_time(time() - botStartTime)}"
         dlspeed_bytes = 0
         upspeed_bytes = 0
         for download in list(download_dict.values()):

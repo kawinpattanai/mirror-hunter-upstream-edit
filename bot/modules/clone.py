@@ -61,7 +61,7 @@ def cloneNode(update, context, multi=0):
     mesg = update.message.text.split('\n')
     message_args = mesg[0].split(' ', maxsplit=1)
     reply_to = update.message.reply_to_message
-    slmsg = f"Added by: {uname} \nUser ID: <code>{update.message.from_user.id}</code>\n\n"
+    slmsg = f"Added by: {uname} \n👥 User ID: <code>{update.message.from_user.id}</code>\n\n"
     if LINK_LOGS:
             try:
                 source_link = message_args[1]

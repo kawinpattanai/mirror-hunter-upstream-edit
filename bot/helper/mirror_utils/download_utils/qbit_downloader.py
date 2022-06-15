@@ -1,5 +1,5 @@
 from hashlib import sha1
-from bencoding import bencode, bdecode
+from bencode import bencode, bdecode
 from os import remove as osremove, path as ospath, listdir
 from time import sleep, time
 from re import search

@@ -535,7 +535,11 @@ def parse_info(res, url):
     return info_parsed
   
 def udrive(url: str) -> str:
-    client = cloudscraper.create_scraper(delay=10, browser='chrome')
+    if 'katdrive' in url:
+      client = requests.Session()
+    else:
+      client = cloudscraper.create_scraper(delay=10, browser='chrome')
+    
     if 'hubdrive' in url:
         client.cookies.update({'crypt': HUBDRIVE_CRYPT})
     if 'drivehub' in url:

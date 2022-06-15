@@ -24,7 +24,7 @@ from bot.helper.ext_utils.exceptions import DirectDownloadLinkException, NotSupp
 from bot.helper.mirror_utils.download_utils.aria2_download import add_aria2c_download
 from bot.helper.mirror_utils.download_utils.mega_downloader import *
 from bot.helper.mirror_utils.download_utils.gd_downloader import add_gd_download
-from bot.helper.mirror_utils.download_utils.qbit_downloader import QbDownloader
+from bot.helper.mirror_utils.download_utils.qbit_downloader import add_qb_torrent
 from bot.helper.mirror_utils.download_utils.direct_link_generator import direct_link_generator
 from bot.helper.mirror_utils.download_utils.telegram_downloader import TelegramDownloadHelper
 from bot.helper.mirror_utils.status_utils.extract_status import ExtractStatus
@@ -609,7 +609,8 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
                 '''
     elif isQbit:
     #elif isQbit and (is_magnet(link) or ospath.exists(link)):
-        Thread(target=QbDownloader(listener).add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', qbitsel)).start()
+        #Thread(target=QbDownloader(listener).add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', qbitsel)).start()
+        Thread(target=add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}', listener, qbitsel)).start()
 
     else:
         if len(mesg) > 1:

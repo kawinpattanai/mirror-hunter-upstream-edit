@@ -31,6 +31,7 @@ Go to 'heroku' branch in your forked repo and add these lines in requirements.tx
 ```
 aiohttp
 asgiref
+bencode.py
 six
 gc-python-utils
 cloudscraper

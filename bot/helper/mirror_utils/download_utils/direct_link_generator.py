@@ -10,6 +10,9 @@ for original authorship. """
 
 import requests
 import re
+from time import sleep
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from base64 import b64decode
 from urllib.parse import urlparse, unquote
@@ -649,3 +652,22 @@ def sharer_pw(url, forced_login=False):
         return flink
     except:
         raise DirectDownloadLinkException("ERROR! File Not Found or User rate exceeded !!")
+        
+ 
+def drivehubs(url: str) -> str:
+  
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    wd = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver',chrome_options=chrome_options)
+    
+    Ok = wd.get(url)
+    wd.find_element(By.XPATH, '//button[@id="fast"]').click()
+    sleep(10)
+    flink = wd.current_url
+    
+    if 'drive.google.com' in url:
+      return flink
+    else:
+      raise DirectDownloadLinkException("ERROR! Maybe Direct Download is not working for this file !")

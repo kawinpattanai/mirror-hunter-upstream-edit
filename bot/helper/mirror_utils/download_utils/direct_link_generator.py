@@ -656,12 +656,12 @@ def sharer_pw(url, forced_login=False):
         
  
 def drivehubs(url: str) -> str:
-    os.chmod('/usr/src/app/chromedriver', 755)
+    os.chmod('/usr/src/app/geckodriver', 755)
     firefox_options = webdriver.FirefoxOptions()
     firefox_options.add_argument('--headless')
     firefox_options.add_argument('--no-sandbox')
     firefox_options.add_argument('--disable-dev-shm-usage')
-    wd = webdriver.Firefox('geckodriver',firefox_options=options)
+    wd = webdriver.Firefox(executatble_path='/usr/src/app/geckodriver', firefox_options=options)
     
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()

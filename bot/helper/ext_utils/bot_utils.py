@@ -123,7 +123,7 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
         for index, download in enumerate(list(download_dict.values())[COUNT:], start=1):
             msg += f"<b>Name:</b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n<b>Status:</b> <i>{download.status()}</i>"
+            msg += f"\n<b>/nStatus:</b> <i>{download.status()}</i>"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
@@ -132,11 +132,11 @@ def get_readable_message():
             ]:
                 msg += f"\n{get_progress_bar_string(download)} {download.progress()}"
                 if download.status() == MirrorStatus.STATUS_CLONING:
-                    msg += f"\n\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b> {download.size()}"
+                    msg += f"\n<b>♻️ Cloned:</b> {get_readable_file_size(download.processed_bytes())}\n<b>📦 Total Size:</b> {download.size()}"
                 elif download.status() == MirrorStatus.STATUS_UPLOADING:
-                    msg += f"\n\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n<b>⬆️ Uploaded:</b> {get_readable_file_size(download.processed_bytes())}\n<b>📦 Total Size:</b>{download.size()}"
                 else:
-                    msg += f"\n\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
+                    msg += f"\n<b>⬇️ Downloaded:</b> {get_readable_file_size(download.processed_bytes())}\t<b>📦 Total Size:</b>{download.size()}"
                 msg += f"\n<b>🏎️ Speed:</b> {download.speed()}\n<b>⏳ ETA:</b> {download.eta()}"
                 try:
                     msg += f"\n\n<b>🌱 Seeders:</b> {download.aria_download().num_seeders}" \
@@ -177,7 +177,7 @@ def get_readable_message():
                     upspeed_bytes += float(spd.split('K')[0]) * 1024
                 elif 'MB/s' in spd:
                     upspeed_bytes += float(spd.split('M')[0]) * 1048576
-        bmsg += f"\n\n<b>🔻 DL:</b> {get_readable_file_size(dlspeed_bytes)}/s | <b>🔺 UP:</b> {get_readable_file_size(upspeed_bytes)}/s"
+        bmsg += f"\n<b>🔻 DL:</b> {get_readable_file_size(dlspeed_bytes)}/s | <b>🔺 UP:</b> {get_readable_file_size(upspeed_bytes)}/s"
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
             msg += f"<b>📄 Page:</b> {PAGE_NO}/{pages} | <b>🛡 Tasks:</b> {tasks}\n"
             buttons = ButtonMaker()

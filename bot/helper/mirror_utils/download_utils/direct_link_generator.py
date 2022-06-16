@@ -671,7 +671,7 @@ def drivehubs(url: str) -> str:
     flink = wd.current_url
     wd.close()
     
-    if 'drive.google.com' in url:
+    if 'drive.google.com' in flink:
       return flink
     else:
-      raise DirectDownloadLinkException(f"ERROR! Maybe Direct Download is not working for this file !\n Retrived URL : {url}")
+      raise DirectDownloadLinkException(f"ERROR! Maybe Direct Download is not working for this file !\n Retrived URL : {flink}")

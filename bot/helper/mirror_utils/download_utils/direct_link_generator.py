@@ -13,7 +13,7 @@ import re
 import os
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 from base64 import b64decode
@@ -657,12 +657,12 @@ def sharer_pw(url, forced_login=False):
         
  
 def drivehubs(url: str) -> str:
-    os.chmod('/usr/src/app/geckodriver', 755)
-    firefox_options = webdriver.FirefoxOptions()
-    firefox_options.add_argument('--headless')
-    firefox_options.add_argument('--no-sandbox')
-    firefox_options.add_argument('--disable-dev-shm-usage')
-    wd = webdriver.Firefox('/usr/src/app/geckodriver', firefox_options=firefox_options)
+    os.chmod('/usr/src/app/chromedriver', 755)
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    wd = webdriver.Chrome('/usr/src/app/chromedriver', chrome_options=chrome_options)
     
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()

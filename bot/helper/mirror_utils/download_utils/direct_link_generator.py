@@ -662,7 +662,7 @@ def drivehubs(url: str) -> str:
     firefox_options.add_argument('--headless')
     firefox_options.add_argument('--no-sandbox')
     firefox_options.add_argument('--disable-dev-shm-usage')
-    wd = webdriver.Firefox(executatble_path='/usr/src/app/geckodriver', firefox_options=options)
+    wd = webdriver.Firefox(executatble_path='/usr/src/app/geckodriver', firefox_options=firefox_options)
     
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()

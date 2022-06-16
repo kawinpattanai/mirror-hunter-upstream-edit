@@ -674,4 +674,4 @@ def drivehubs(url: str) -> str:
     if 'drive.google.com' in url:
       return flink
     else:
-      raise DirectDownloadLinkException("ERROR! Maybe Direct Download is not working for this file !")
+      raise DirectDownloadLinkException(f"ERROR! Maybe Direct Download is not working for this file !\n Retrived URL : {url}")

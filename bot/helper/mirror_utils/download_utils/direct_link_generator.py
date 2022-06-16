@@ -656,7 +656,7 @@ def sharer_pw(url, forced_login=False):
         
  
 def drivehubs(url: str) -> str:
-    os.chmod('/usr/src/app/chromedriver', 0755)
+    os.chmod('/usr/src/app/chromedriver', 755)
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')

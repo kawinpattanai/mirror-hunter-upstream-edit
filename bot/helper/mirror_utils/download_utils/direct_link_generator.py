@@ -13,7 +13,7 @@ import re
 import os
 from time import sleep
 from selenium import webdriver
-from selenium.webdriver.firfox.options import Options
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 
 from base64 import b64decode

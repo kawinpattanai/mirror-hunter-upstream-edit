@@ -667,6 +667,7 @@ def drivehubs(url: str) -> str:
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()
     sleep(10)
+    wd.switch_to.window(wd.window_handles[-1])
     flink = wd.current_url
     wd.close()
     

@@ -657,11 +657,11 @@ def sharer_pw(url, forced_login=False):
  
 def drivehubs(url: str) -> str:
     os.chmod('/usr/src/app/chromedriver', 755)
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    wd = webdriver.Chrome(executable_path='/usr/src/app/chromedriver',chrome_options=chrome_options)
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.add_argument('--headless')
+    firefox_options.add_argument('--no-sandbox')
+    firefox_options.add_argument('--disable-dev-shm-usage')
+    wd = webdriver.Firefox('geckodriver',firefox_options=options)
     
     Ok = wd.get(url)
     wd.find_element(By.XPATH, '//button[@id="fast"]').click()

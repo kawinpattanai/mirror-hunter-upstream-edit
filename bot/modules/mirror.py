@@ -600,7 +600,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
         if MEGA_API_KEY is not None:
             Thread(target=MegaDownloader(listener).add_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/')).start()
         else:
-            sendMessage('MEGA_API_KEY not Provided!', bot, message)
+            sendMessage('MEGA_API_KEY not Provided!', bot, update)
             '''
             if link_type == "folder":
                 sendMessage(f"{uname}, <b>Your Requested MEGA Folder Has Been Added To</b> /{BotCommands.StatusCommand}", bot, update)

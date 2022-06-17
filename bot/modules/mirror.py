@@ -13,7 +13,7 @@ from telegram.ext import CommandHandler
 from telegram import InlineKeyboardMarkup, ParseMode, InlineKeyboardButton
 
 from bot import bot, Interval, OWNER_ID, INDEX_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, \
-                 BLOCK_MEGA_FOLDER, BLOCK_MEGA_LINKS, VIEW_LINK, aria2, QB_SEED, \
+                 BLOCK_MEGA_FOLDER, BLOCK_MEGA_LINKS, MEGA_API_KEY, VIEW_LINK, aria2, QB_SEED, \
                 dispatcher, DOWNLOAD_DIR, download_dict, download_dict_lock, TG_SPLIT_SIZE, LOGGER, \
                 MIRROR_LOGS, BOT_PM, CHANNEL_USERNAME, LEECH_ENABLED, AUTO_DELETE_UPLOAD_MESSAGE_DURATION, FSUB, \
                 FSUB_CHANNEL_ID, LEECH_LOG, SOURCE_LINK, LEECH_LOG_ALT, MEGAREST, LINK_LOGS, INCOMPLETE_TASK_NOTIFIER, DB_URI
@@ -597,7 +597,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
         Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
 
     elif is_mega_link(link):
-        if MEGA_KEY is not None:
+        if MEGA_API_KEY is not None:
             Thread(target=MegaDownloader(listener).add_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/')).start()
         else:
             sendMessage('MEGA_API_KEY not Provided!', bot, message)

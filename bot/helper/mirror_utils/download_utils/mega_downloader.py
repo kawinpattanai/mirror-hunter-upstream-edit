@@ -63,7 +63,7 @@ class MegaDownloader:
             self.__size = size
             self.__gid = gid
         self.__listener.onDownloadStart()
-        sendStatusMessage(self.__listener.message, self.__listener.bot)
+        sendStatusMessage(self.__listener.update, self.__listener.bot)
 
     def __onInterval(self):
         dlInfo = self.__mega_client.getDownloadInfo(self.gid)

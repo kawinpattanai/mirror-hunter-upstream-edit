@@ -598,7 +598,7 @@ def _mirror(bot, update, isZip=False, extract=False, isQbit=False, isLeech=False
 
     elif is_mega_link(link):
         if MEGA_API_KEY is not None:
-            Thread(target=MegaDownloader(listener).add_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/')).start()
+            Thread(target=add_mega_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener)).start()
         else:
             sendMessage('MEGA_API_KEY not Provided!', bot, update)
             '''

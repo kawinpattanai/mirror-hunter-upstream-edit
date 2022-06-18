@@ -1,12 +1,11 @@
 #  UPSTREAM_REPO.
 
-This is a modified repo of [arata74's MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER) & uses [anasty17's mltb](https://github.com/anasty17/mirror-leech-telegram-bot/tree/heroku) 'heroku' branch for bypassing ban.
-
+This is a modified repo of [arata74's MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER) 
 ![MIRROR HUNTER](https://media.giphy.com/media/dikubVwoUUBxLgpraV/giphy.gif?cid=790b7611c1fd9acab35e7fc75f7447316865d93043fc77b3&rid=giphy.gif&ct=s)
 
 # Features & Fixes:
 
-## ALL FEATURES OF [MLTB](https://github.com/anasty17/mirror-leech-telegram-bot) & [MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER)
+## ALL FEATURES OF [MIRROR-HUNTER](https://github.com/arata74/MIRROR-HUNTER)
 
 ## By [Maverick](https://telegram.dog/Maverick9099):
 - Direct Clone from 
@@ -58,6 +57,5 @@ For the simplification I've made some terms..
 
 ## CREDITS:
 - [Maverick](https://github.com/majnurangeela) for integration and compatibility fixes
-- [Anasty17](https://github.com/anasty17/mirror-leech-telegram-bot) for his MLTB & Heroku Bypass !
 - [xcscxr](https://github.com/xcscxr) for his wonderful google drive link scrapers !
 - [arata74](https://github.com/arata74) or [ANIME-REPUBLIC](https://github.com/ANIME-REPUBLIC) For Base Repo

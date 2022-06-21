@@ -524,13 +524,6 @@ try:
     AS_DOCUMENT = AS_DOCUMENT.lower() == 'true'
 except:
     AS_DOCUMENT = False
-
-try:
-    IMAGE_LEECH = getConfig('IMAGE_LEECH')
-    IMAGE_LEECH = IMAGE_LEECH.lower() == 'true'
-except KeyError:
-    IMAGE_LEECH = False
-
 try:
     EQUAL_SPLITS = getConfig('EQUAL_SPLITS')
     EQUAL_SPLITS = EQUAL_SPLITS.lower() == 'true'

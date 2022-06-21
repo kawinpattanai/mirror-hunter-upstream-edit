@@ -13,7 +13,7 @@ from json import loads as jsnloads
 from subprocess import Popen, run as srun, check_output
 from time import sleep, time
 from threading import Thread, Lock
-from pyrogram import Client
+from pyrogram import Client, enums
 from dotenv import load_dotenv
 from megasdkrestclient import MegaSdkRestClient
 from megasdkrestclient import errors as mega_err

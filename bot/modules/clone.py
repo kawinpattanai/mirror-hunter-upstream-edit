@@ -55,7 +55,7 @@ def cloneNode(update, context, multi=0):
                 bot, update, reply_markup=InlineKeyboardMarkup(keyboard))
             Thread(target=auto_delete_message, args=(bot, update.message, message)).start()
             return
-    
+
     uname = f'<a href="tg://user?id={update.message.from_user.id}">{update.message.from_user.first_name}</a>'
     args = update.message.text.split(" ", maxsplit=1)
     mesg = update.message.text.split('\n')
@@ -79,7 +79,7 @@ def cloneNode(update, context, multi=0):
                 except TypeError:
                     pass
     link = ''
-    
+
     if len(args) > 1:
         link = args[1]
         if link.isdigit():
@@ -119,7 +119,7 @@ def cloneNode(update, context, multi=0):
         except DirectDownloadLinkException as e:
             deleteMessage(context.bot, msg)
             return sendMessage(str(e), context.bot, update)
- 
+
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
@@ -171,13 +171,14 @@ def cloneNode(update, context, multi=0):
         cc = f'\n\n<b>#Cloned By: </b>{tag}'
         if button in ["cancelled", ""]:
             sendMessage(f"{tag} {result}", context.bot, update)
-        else:
-            if AUTO_DELETE_UPLOAD_MESSAGE_DURATION != -1:
-                auto_delete_message = int(AUTO_DELETE_UPLOAD_MESSAGE_DURATION / 60)
-                if update.message.chat.type == 'private':
-                    warnmsg = ''
-                else:
-                    warnmsg = f'\n<b>This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
+        elif AUTO_DELETE_UPLOAD_MESSAGE_DURATION != -1:
+            auto_delete_message = int(AUTO_DELETE_UPLOAD_MESSAGE_DURATION / 60)
+            warnmsg = (
+                ''
+                if update.message.chat.type == 'private'
+                else f'\n<b>This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
+            )
+
         if BOT_PM and update.message.chat.type != 'private':
             pmwarn = f"\n<b>I have sent links in PM.</b>\n"
         elif update.message.chat.type == 'private':

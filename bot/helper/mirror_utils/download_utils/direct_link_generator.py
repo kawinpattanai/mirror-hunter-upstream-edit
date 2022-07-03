@@ -151,7 +151,8 @@ def uptobox(url: str) -> str:
             dl_url = link
         except:
             file_id = re.findall(r'\bhttps?://.*uptobox\.com/(\w+)', url)[0]
-            file_link = 'https://uptobox.com/api/link?token=%s&file_code=%s' % (UPTOBOX_TOKEN, file_id)
+            file_link = f'https://uptobox.com/api/link?token={UPTOBOX_TOKEN}&file_code={file_id}'
+
             req = requests.get(file_link)
             result = req.json()
             dl_url = result['data']['dlLink']
@@ -266,7 +267,9 @@ def pixeldrain(url: str) -> str:
     if resp["success"]:
         return dl_link
     else:
-        raise DirectDownloadLinkException("ERROR: Cant't download due {}.".format(resp["message"]))
+        raise DirectDownloadLinkException(
+            f"""ERROR: Cant't download due {resp["message"]}."""
+        )
 
 def antfiles(url: str) -> str:
     """ Antfiles direct link generator
@@ -332,11 +335,12 @@ def fichier(link: str) -> str:
     elif len(soup.find_all("div", {"class": "ct_warn"})) == 2:
         str_2 = soup.find_all("div", {"class": "ct_warn"})[-1]
         if "you must wait" in str(str_2).lower():
-            numbers = [int(word) for word in str(str_2).split() if word.isdigit()]
-            if not numbers:
-                raise DirectDownloadLinkException("ERROR: 1fichier is on a limit. Please wait a few minutes/hour.")
-            else:
+            if numbers := [
+                int(word) for word in str(str_2).split() if word.isdigit()
+            ]:
                 raise DirectDownloadLinkException(f"ERROR: 1fichier is on a limit. Please wait {numbers[0]} minute.")
+            else:
+                raise DirectDownloadLinkException("ERROR: 1fichier is on a limit. Please wait a few minutes/hour.")
         elif "protect access" in str(str_2).lower():
           raise DirectDownloadLinkException(f"ERROR: This link requires a password!\n\n<b>This link requires a password!</b>\n- Insert sign <b>::</b> after the link and write the password after the sign.\n\n<b>Example:</b>\n<code>/{BotCommands.MirrorCommand} https://1fichier.com/?smmtd8twfpm66awbqz04::love you</code>\n\n* No spaces between the signs <b>::</b>\n* For the password, you can use a space!")
         else:
@@ -345,11 +349,12 @@ def fichier(link: str) -> str:
         str_1 = soup.find_all("div", {"class": "ct_warn"})[-2]
         str_3 = soup.find_all("div", {"class": "ct_warn"})[-1]
         if "you must wait" in str(str_1).lower():
-            numbers = [int(word) for word in str(str_1).split() if word.isdigit()]
-            if not numbers:
-                raise DirectDownloadLinkException("ERROR: 1fichier is on a limit. Please wait a few minutes/hour.")
-            else:
+            if numbers := [
+                int(word) for word in str(str_1).split() if word.isdigit()
+            ]:
                 raise DirectDownloadLinkException(f"ERROR: 1fichier is on a limit. Please wait {numbers[0]} minute.")
+            else:
+                raise DirectDownloadLinkException("ERROR: 1fichier is on a limit. Please wait a few minutes/hour.")
         elif "bad password" in str(str_3).lower():
           raise DirectDownloadLinkException("ERROR: The password you entered is wrong!")
         else:
@@ -365,7 +370,7 @@ def solidfiles(url: str) -> str:
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36'
     }
     pageSource = requests.get(url, headers = headers).text
-    mainOptions = str(re.search(r'viewerOptions\'\,\ (.*?)\)\;', pageSource).group(1))
+    mainOptions = str(re.search(r'viewerOptions\'\,\ (.*?)\)\;', pageSource)[1])
     return jsnloads(mainOptions)["downloadUrl"]
 
 def krakenfiles(page_link: str) -> str:
@@ -473,27 +478,27 @@ def unified(url: str) -> str:
     info_parsed = parse_infou(res.text)
     info_parsed['error'] = False
     info_parsed['link_type'] = 'login' # direct/login
-    
+
     headers = {
         "Content-Type": f"multipart/form-data; boundary={'-'*4}_",
     }
-    
+
     data = {
         'type': 1,
         'key': key,
         'action': 'original'
     }
-    
+
     if len(ddl_btn):
         info_parsed['link_type'] = 'direct'
         data['action'] = 'direct'
-    
+
     while data['type'] <= 3:
         try:
             response = client.post(url, data=gen_payload(data), headers=headers).json()
             break
         except: data['type'] += 1
-        
+
     if 'url' in response:
         info_parsed['gdrive_link'] = response['url']
     elif 'error' in response and response['error']:
@@ -502,30 +507,22 @@ def unified(url: str) -> str:
     else:
         info_parsed['error'] = True
         info_parsed['error_message'] = 'Something went wrong :('
-        
+
     if info_parsed['error']:
         raise DirectDownloadLinkException(f"ERROR! {info_parsed['error_message']}")
-    
-    if urlparse(url).netloc == 'appdrive.in':
+
+    if urlparse(url).netloc in ['appdrive.in', 'gdflix.pro']:
         flink = info_parsed['gdrive_link']
-        return flink
-      
-    elif urlparse(url).netloc == 'gdflix.pro':
-        flink = info_parsed['gdrive_link']
-        return flink
-    
     elif urlparse(url).netloc == 'driveapp.in':
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn')]/@href")[0]
         flink = drive_link
-        return flink
-      
     else:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
         flink = drive_link
         info_parsed['src_url'] = url
-        return flink
+    return flink
   
 def parse_info(res, url):
     info_parsed = {}
@@ -533,9 +530,11 @@ def parse_info(res, url):
         info_chunks = findall('<td\salign="right">(.*?)<\/td>', res.text)
     elif 'sharer.pw' in url:
         f = findall(">(.*?)<\/td>", res.text)
-        info_parsed = {}
-        for i in range(0, len(f), 3):
-            info_parsed[f[i].lower().replace(" ", "_")] = f[i + 2]
+        info_parsed = {
+            f[i].lower().replace(" ", "_"): f[i + 2]
+            for i in range(0, len(f), 3)
+        }
+
         return info_parsed
     else:
         info_chunks = findall('>(.*?)<\/td>', res.text)
@@ -548,7 +547,7 @@ def udrive(url: str) -> str:
       client = requests.Session()
     else:
       client = cloudscraper.create_scraper(delay=10, browser='chrome')
-    
+
     if 'hubdrive' in url:
         client.cookies.update({'crypt': HUBDRIVE_CRYPT})
     if 'drivehub' in url:
@@ -561,43 +560,39 @@ def udrive(url: str) -> str:
         client.cookies.update({'crypt': DRIVEFIRE_CRYPT})
     if 'drivebuzz' in url:
         client.cookies.update({'crypt': DRIVEFIRE_CRYPT})
-        
+
     res = client.get(url)
     info_parsed = parse_info(res, url)
 
     info_parsed['error'] = False
-    
+
     up = urlparse(url)
     req_url = f"{up.scheme}://{up.netloc}/ajax.php?ajax=download"
-    
+
     file_id = url.split('/')[-1]
-    
+
     data = { 'id': file_id }
-    
+
     headers = {
         'x-requested-with': 'XMLHttpRequest'
     }
-    
+
     try:
         res = client.post(req_url, headers=headers, data=data).json()['file']
     except: 
         raise DirectDownloadLinkException("ERROR! File Not Found or User rate exceeded !!")
-    
+
     if 'drivefire' in url:
         decoded_id = res.rsplit('/', 1)[-1]
         flink = f"https://drive.google.com/file/d/{decoded_id}"
         return flink
-    elif 'drivehub' in url:
-        gd_id = res.rsplit("=", 1)[-1]
-        flink = f"https://drive.google.com/open?id={gd_id}"
-        return flink
-    elif 'drivebuzz' in url:
+    elif 'drivehub' in url or 'drivebuzz' in url:
         gd_id = res.rsplit("=", 1)[-1]
         flink = f"https://drive.google.com/open?id={gd_id}"
         return flink
     else:
         gd_id = findall('gd=(.*)', res, re.DOTALL)[0]
- 
+
     info_parsed['gdrive_url'] = f"https://drive.google.com/open?id={gd_id}"
     info_parsed['src_url'] = url
     flink = info_parsed['gdrive_url']
@@ -605,53 +600,52 @@ def udrive(url: str) -> str:
 
 def sharer_pw(url, forced_login=False):
     client = cloudscraper.create_scraper(delay=10, browser='chrome')
-    
+
     client.cookies.update({
         "XSRF-TOKEN": XSRF_TOKEN,
         "laravel_session": laravel_session
     })
-    
+
     res = client.get(url)
     token = findall("token\s=\s'(.*?)'", res.text, re.DOTALL)[0]
-    
+
     ddl_btn = etree.HTML(res.content).xpath("//button[@id='btndirect']")
-    
+
     info_parsed = parse_info(res, url)
     info_parsed['error'] = True
     info_parsed['src_url'] = url
     info_parsed['link_type'] = 'login' # direct/login
     info_parsed['forced_login'] = forced_login
-    
+
     headers = {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
         'x-requested-with': 'XMLHttpRequest'
     }
-    
+
     data = {
         '_token': token
     }
-    
+
     if len(ddl_btn):
         info_parsed['link_type'] = 'direct'
     if not forced_login:
         data['nl'] = 1
-    
+
     try: 
-        res = client.post(url+'/dl', headers=headers, data=data).json()
+        res = client.post(f'{url}/dl', headers=headers, data=data).json()
     except:
         return info_parsed
-    
+
     if 'url' in res and res['url']:
         info_parsed['error'] = False
         info_parsed['gdrive_link'] = res['url']
-        
-    if len(ddl_btn) and not forced_login and not 'url' in info_parsed:
+
+    if len(ddl_btn) and not forced_login and 'url' not in info_parsed:
         # retry download via login
         return sharer_pw(url, forced_login=True)
-    
+
     try:
-        flink = info_parsed['gdrive_link']
-        return flink
+        return info_parsed['gdrive_link']
     except:
         raise DirectDownloadLinkException("ERROR! File Not Found or User rate exceeded !!")
         

@@ -87,7 +87,7 @@ class MirrorListener:
             try:
                 with download_dict_lock:
                     download_dict[self.uid] = ZipStatus(name, m_path, size)
-                path = m_path + ".zip"
+                path = f"{m_path}.zip"
                 LOGGER.info(f'Zip: orig_path: {m_path}, zip_path: {path}')
                 if self.pswd is not None:
                     if self.isLeech and int(size) > TG_SPLIT_SIZE:
@@ -242,7 +242,7 @@ class MirrorListener:
         link_id = str(LINK_LOGS)[5:][:-1]
         S_link =  f"https://t.me/c/{link_id}/{msg_id}"
             '''
-            
+
         msg = f'<b>Name: </b><code>{name.replace("<", "")}</code>\n\n<b>📦 Size: </b>{size}'
         if AUTO_DELETE_UPLOAD_MESSAGE_DURATION != -1:
             reply_to = self.message.reply_to_message
@@ -252,10 +252,12 @@ class MirrorListener:
                 except:
                     pass
             auto_delete_message = int(AUTO_DELETE_UPLOAD_MESSAGE_DURATION / 60)
-            if self.message.chat.type == 'private':
-                warnmsg = ''
-            else:
-                warnmsg = f'\n<b>❗ This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
+            warnmsg = (
+                ''
+                if self.message.chat.type == 'private'
+                else f'\n<b>❗ This message will be deleted in <i>{auto_delete_message} minutes</i> from this group.</b>\n'
+            )
+
         else:
             warnmsg = ''
         if BOT_PM and self.message.chat.type != 'private':
@@ -267,7 +269,6 @@ class MirrorListener:
         else:
             pmwarn = ''
             pmwarn_mirror = ''
-        logwarn = f"\n<b>I have sent files in Log Channel.(Join Leech Log channel 🤫) </b>\n"
         if self.isLeech:
             count = len(files)
             msg += f'\n<b>🗂 Total Files: </b>{count}'
@@ -304,6 +305,7 @@ class MirrorListener:
 
             else:
                 fmsg = '\n\n'
+                logwarn = f"\n<b>I have sent files in Log Channel.(Join Leech Log channel 🤫) </b>\n"
                 for index, item in enumerate(list(files), start=1):
                     msg_id = files[item]
                     link = f"https://t.me/c/{chat_id}/{msg_id}"

@@ -63,7 +63,7 @@ try:
     TORRENT_TIMEOUT = int(TORRENT_TIMEOUT)
 except:
     TORRENT_TIMEOUT = None
- 
+
 PORT = environ.get('PORT')
 Popen([f"gunicorn web.wserver:app --bind 0.0.0.0:{PORT}"], shell=True)
 srun(["last-api", "-d", "--profile=."])
@@ -195,8 +195,6 @@ try:
         MIRROR_LOGS.add(int(chats))
 except:
     logging.warning('Logs Chat Details not provided!')
-    pass
-
 if ospath.exists("link_logs.txt"):
     with open("link_logs.txt", "r+") as f:
         lines = f.readlines()
@@ -210,8 +208,6 @@ try:
         LINK_LOGS.add(int(chats))
 except:
     logging.warning('LINK_LOGS Chat id not provided, Proceeding Without it')
-    pass
-
 if ospath.exists("logs_chat.txt"):
     with open("logs_chat.txt", "r+") as f:
         lines = f.readlines()
@@ -232,8 +228,6 @@ try:
         LEECH_LOG.add(int(chats))
 except:
     logging.warning('Leech Log Channel ID not Provided!')
-    pass
-
 try:
     achats = getConfig("LEECH_LOG_ALT")
     achats = achats.split(" ")
@@ -241,13 +235,12 @@ try:
         LEECH_LOG_ALT.add(int(chats))
 except:
     logging.warning('Leech Log alt Channel ID not Provided!')
-    pass
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
     DOWNLOAD_DIR = getConfig('DOWNLOAD_DIR')
     if not DOWNLOAD_DIR.endswith("/"):
-        DOWNLOAD_DIR = DOWNLOAD_DIR + '/'
+        DOWNLOAD_DIR = f'{DOWNLOAD_DIR}/'
     DOWNLOAD_STATUS_UPDATE_INTERVAL = int(getConfig('DOWNLOAD_STATUS_UPDATE_INTERVAL'))
     OWNER_ID = int(getConfig('OWNER_ID'))
     AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
@@ -283,7 +276,6 @@ def aria2c_init():
             aria2.remove([download], force=True, files=True)
     except Exception as e:
         logging.error(f"Aria2c initializing error: {e}")
-        pass
 
 if not ospath.isfile(".restartmsg"):
     sleep(1)
